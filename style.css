@@ -146,3 +146,26 @@ button:active {
     background: rgba(251, 191, 36, 0.1);
     border: 1px solid var(--accent);
 }
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 kolommen */
+    gap: 10px;
+}
+
+/* De nieuwe kaartjes laten we de hele breedte (3 kolommen) pakken */
+.full-width {
+    grid-column: span 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px !important;
+}
+
+.full-width span {
+    margin-top: 0;
+}
+
+.full-width strong {
+    margin-top: 0;
+    font-size: 1.2rem;
+}

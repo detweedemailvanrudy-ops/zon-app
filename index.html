@@ -30,19 +30,28 @@
             </div>
 
             <div class="stats-grid">
-                <div class="stat-card">
-                    <span>Opkomst</span>
-                    <strong id="sunrise-time">--:--</strong>
-                </div>
-                <div class="stat-card highlight">
-                    <span>Middelpunt</span>
-                    <strong id="solar-noon">--:--</strong>
-                </div>
-                <div class="stat-card">
-                    <span>Ondergang</span>
-                    <strong id="sunset-time">--:--</strong>
-                </div>
-            </div>
+				<div class="stat-card full-width">
+					<span id="display-date">Datum & Tijd</span>
+					<strong id="current-time-display">--:--:--</strong>
+				</div>
+				<div class="stat-card full-width highlight">
+					<span id="countdown-label">Tijd tot...</span>
+					<strong id="countdown-timer">--h --m</strong>
+				</div>
+
+				<div class="stat-card">
+					<span>Opkomst</span>
+					<strong id="sunrise-time">--:--</strong>
+				</div>
+				<div class="stat-card">
+					<span>Middelpunt</span>
+					<strong id="solar-noon">--:--</strong>
+				</div>
+				<div class="stat-card">
+					<span>Ondergang</span>
+					<strong id="sunset-time">--:--</strong>
+				</div>
+			</div>
         </main>
     </div>
     <script src="script.js"></script>
