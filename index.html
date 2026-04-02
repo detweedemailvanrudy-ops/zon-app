@@ -2,64 +2,66 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zon-Tracker</title>
-    <link rel="stylesheet" href="style.css">
-	<link rel="manifest" href="manifest.json">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Zonlicht</title>
+    <link rel="stylesheet" href="style.css?v=1.2">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
 </head>
 <body>
+
     <div class="app-container">
         <header>
-            <h1>Zon Tracker</h1>
-            <form class="location-controls" id="search-form">
-				<input type="text" id="city-input" placeholder="Voer stad in..." autocomplete="off">
-				<button type="submit" id="btn-search">Zoek</button>
-				<button type="button" id="btn-gps" title="Gebruik GPS">📍</button>
-			</form>
+            <h1>Zonlicht</h1>
+            <form id="search-form" class="location-controls">
+                <input type="text" id="city-input" placeholder="Zoek een stad..." autocomplete="off">
+                <button type="submit">ZOEK</button>
+                <button type="button" id="btn-gps">📍</button>
+            </form>
+            <div id="current-location" class="location-display">📍 Zoek een locatie...</div>
         </header>
-		<div class="location-display">
-			<p>Geselecteerde locatie: <span id="current-location">Geen</span></p>
-		</div>
-        <main>
-            <div class="progress-section">
-                <div class="sun-path">
-                    <div id="progress-bar"></div>
-                    <div id="sun-icon">☀️</div>
+
+        <main class="progress-section">
+            <div class="sun-path">
+                <div id="progress-bar"></div>
+                <div id="sun-icon">☀️</div>
+            </div>
+        </main>
+
+        <div class="stats-grid">
+            <div class="stat-card full-width">
+                <div class="time-info">
+                    <span id="display-date">Datum</span>
+                    <strong id="current-time-display">--:--:--</strong>
                 </div>
-                <p id="status-text">Locatie laden...</p>
+                <div class="daylight-info">
+                    <span>Totaal daglicht</span>
+                    <strong id="daylight-duration">--u --m</strong>
+                </div>
             </div>
 
-            <div class="stats-grid">
-				<div class="stat-card full-width">
-					<div class="time-info">
-						<span id="display-date">Datum</span>
-						<strong id="current-time-display">--:--:--</strong>
-					</div>
-					<div class="daylight-info">
-						<span>Totaal daglicht</span>
-						<strong id="daylight-duration">--u --m</strong>
-					</div>
-				</div>
-				<div class="stat-card full-width highlight">
-					<span id="countdown-label">Tijd tot...</span>
-					<strong id="countdown-timer">--h --m</strong>
-				</div>
+            <div class="stat-card full-width highlight">
+                <span id="countdown-label">Tijd tot...</span>
+                <strong id="countdown-timer">--h --m</strong>
+            </div>
 
-				<div class="stat-card">
-					<span>Opkomst</span>
-					<strong id="sunrise-time">--:--</strong>
-				</div>
-				<div class="stat-card">
-					<span>Middelpunt</span>
-					<strong id="solar-noon">--:--</strong>
-				</div>
-				<div class="stat-card">
-					<span>Ondergang</span>
-					<strong id="sunset-time">--:--</strong>
-				</div>
-			</div>
-        </main>
+            <div class="stat-card">
+                <span>Opkomst</span>
+                <strong id="sunrise-time">--:--</strong>
+            </div>
+            <div class="stat-card">
+                <span>Middelpunt</span>
+                <strong id="solar-noon">--:--</strong>
+            </div>
+            <div class="stat-card">
+                <span>Ondergang</span>
+                <strong id="sunset-time">--:--</strong>
+            </div>
+        </div>
+
+        <footer id="status-text">Klaar voor Vice City vibes 🌴</footer>
     </div>
-    <script src="script.js"></script>
+
+    <script src="script.js?v=1.2"></script>
 </body>
 </html>

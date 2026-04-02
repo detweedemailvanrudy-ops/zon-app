@@ -37,15 +37,21 @@ body {
 
 /* 2. Header & Zoeken (Bovenkant) */
 header h1 {
-    font-size: 1.8rem;
-    text-shadow: 0 0 10px var(--vice-pink);
-    margin-bottom: 5px;
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    text-shadow: none; /* Schaduw is nu weg */
+    letter-spacing: -1px;
 }
 
 .location-controls {
     display: flex;
     gap: 8px;
     margin-top: 10px;
+}
+.location-controls input {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0; /* Maakt de aansluiting strakker */
 }
 
 input {
@@ -71,30 +77,33 @@ button {
 }
 
 .location-display {
-    font-size: 0.9rem;
-    color: #cbd5e1;
-    background: rgba(0,0,0,0.3);
-    padding: 10px;
-    border-radius: 8px;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px;
+    border-radius: 0 0 10px 10px; /* Alleen hoeken onderaan */
     text-align: center;
-    margin-top: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: none; /* Versmelt met de zoekbalk erboven */
 }
 
 /* 3. De Zon-Baan (Het Midden / Visuals) */
 .progress-section {
-    flex-grow: 1; /* Neemt de beschikbare ruimte in het midden in */
+    flex-grow: 2; /* Geeft dit deel nog meer gewicht om de ruimte te vullen */
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centreert de zon-baan verticaal */
-    margin: 40px 0;
+    justify-content: center; 
+    margin: 0; /* Ruimte wordt nu beheerd door flex-grow */
 }
 
 .sun-path {
     width: 100%;
-    height: 10px;
-    background: rgba(255,255,255,0.15);
+    height: 12px;
+    background: rgba(255,255,255,0.1);
     border-radius: 20px;
     position: relative;
+    /* Een subtiele gloed op de baan zelf in plaats van de titel */
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
 }
 
 #progress-bar {
