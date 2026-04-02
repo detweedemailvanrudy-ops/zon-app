@@ -110,19 +110,31 @@ async function getSunData(lat, lon) {
     try {
         const response = await fetch(`${SUN_API_URL}?lat=${lat}&lng=${lon}&formatted=0`);
         const data = await response.json();
+        
         if (data.status === "OK") {
-            sunTimes.sunrise = new Date(data.results.sunrise);
-            sunTimes.sunset = new Date(data.results.sunset);
-            const solarNoon = new Date(data.results.solar_noon);
+            const results = data.results;
+            sunTimes.sunrise = new Date(results.sunrise);
+            sunTimes.sunset = new Date(results.sunset);
+            const solarNoon = new Date(results.solar_noon);
             
+            // 1. Zontijden tonen
             const options = { hour: '2-digit', minute: '2-digit' };
             document.getElementById('sunrise-time').innerText = sunTimes.sunrise.toLocaleTimeString('nl-NL', options);
             document.getElementById('sunset-time').innerText = sunTimes.sunset.toLocaleTimeString('nl-NL', options);
             document.getElementById('solar-noon').innerText = solarNoon.toLocaleTimeString('nl-NL', options);
             
+            // 2. Daglichtduur berekenen (day_length is in seconden)
+            const totalSeconds = results.day_length;
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            document.getElementById('daylight-duration').innerText = `${hours}u ${minutes}m`;
+            
             updateStatus("Gegevens bijgewerkt");
         }
-    } catch (error) { updateStatus("Fout bij laden."); }
+    } catch (error) { 
+        updateStatus("Fout bij laden."); 
+        console.error(error);
+    }
 }
 
 function updateVisuals(start, end) {

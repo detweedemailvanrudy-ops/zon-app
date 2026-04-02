@@ -5,6 +5,7 @@
     --text: #f8fafc;
 }
 
+/* 1. Basis Instellingen */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -18,22 +19,23 @@ body {
     display: flex;
     justify-content: center;
     min-height: 100vh;
-    transition: background 2s ease; /* Zorgt voor de vloeiende kleurverandering */
+    transition: background 2s ease;
     overflow-x: hidden;
 }
 
 .app-container {
     width: 100%;
-    max-width: 450px; /* Perfect voor de Moto G72 */
-    padding: 25px;
+    max-width: 450px; /* Geoptimaliseerd voor Moto G72 */
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
 }
 
+/* 2. Zoekbalk & Controls */
 header h1 {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
+    font-size: 1.6rem;
+    margin-bottom: 5px;
 }
 
 .location-controls {
@@ -59,11 +61,6 @@ button {
     color: #451a03;
     font-weight: bold;
     cursor: pointer;
-    transition: transform 0.1s;
-}
-
-button:active {
-    transform: scale(0.95);
 }
 
 .location-display {
@@ -72,11 +69,12 @@ button:active {
     background: rgba(0,0,0,0.2);
     padding: 8px;
     border-radius: 5px;
+    text-align: center;
 }
 
-/* Progress Sectie */
+/* 3. Progress Sectie (De Zon-baan) */
 .progress-section {
-    margin: 40px 0;
+    margin: 25px 0;
     text-align: center;
 }
 
@@ -86,7 +84,7 @@ button:active {
     background: rgba(255,255,255,0.1);
     border-radius: 10px;
     position: relative;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 #progress-bar {
@@ -95,6 +93,7 @@ button:active {
     background: linear-gradient(90deg, #f59e0b, #fbbf24);
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+    transition: width 0.5s ease-in-out;
 }
 
 #sun-icon {
@@ -104,7 +103,7 @@ button:active {
     transform: translateX(-50%);
     font-size: 30px;
     text-shadow: 0 0 15px #fbbf24;
-    transition: left 1s ease-in-out;
+    transition: left 0.5s ease-in-out;
     animation: pulse 2s infinite alternate;
 }
 
@@ -113,59 +112,71 @@ button:active {
     to { transform: translateX(-50%) scale(1.15); }
 }
 
-/* Stats Grid */
-.stats-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 12px;
-}
-
-.stat-card {
-    background: var(--card-bg);
-    padding: 15px 5px;
-    border-radius: 15px;
-    text-align: center;
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255,255,255,0.05);
-}
-
-.stat-card span {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    color: #94a3b8;
-}
-
-.stat-card strong {
-    display: block;
-    font-size: 1.1rem;
-    color: var(--accent);
-    margin-top: 5px;
-}
-
-.highlight {
-    background: rgba(251, 191, 36, 0.1);
-    border: 1px solid var(--accent);
-}
+/* 4. Stats Grid (Het Dashboard) */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 3 kolommen */
     gap: 10px;
 }
 
-/* De nieuwe kaartjes laten we de hele breedte (3 kolommen) pakken */
+.stat-card {
+    background: var(--card-bg);
+    padding: 12px 5px;
+    border-radius: 15px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.stat-card span {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.5px;
+}
+
+.stat-card strong {
+    display: block;
+    font-size: 1.1rem;
+    color: var(--accent);
+    margin-top: 4px;
+}
+
+/* Speciale kaarten die de hele breedte pakken */
 .full-width {
     grid-column: span 3;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 20px !important;
+    padding: 15px 20px;
+    text-align: left;
 }
 
-.full-width span {
-    margin-top: 0;
+.highlight {
+    background: rgba(251, 191, 36, 0.15);
+    border: 1px solid var(--accent);
 }
 
-.full-width strong {
-    margin-top: 0;
-    font-size: 1.2rem;
+/* Info-secties binnen de full-width kaart */
+.time-info, .daylight-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.daylight-info {
+    text-align: right;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    padding-left: 15px;
+}
+
+#daylight-duration {
+    color: #fcd34d; /* Iets zachter geel voor contrast */
+}
+
+#status-text {
+    font-size: 0.75rem;
+    color: #64748b;
+    text-align: center;
+    margin-top: 10px;
 }
