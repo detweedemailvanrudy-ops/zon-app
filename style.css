@@ -77,14 +77,18 @@ button {
 }
 
 .location-display {
-    font-size: 0.85rem;
-    color: #94a3b8;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 8px;
-    border-radius: 0 0 10px 10px; /* Alleen hoeken onderaan */
+    font-size: 0.9rem;
+    font-weight: 600;
+    /* Kleur aanpassing voor leesbaarheid */
+    color: #ffffff; 
+    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6); 
+    
+    background: rgba(0, 0, 0, 0.4); /* Iets donkerder voor meer contrast */
+    padding: 10px;
+    border-radius: 0 0 12px 12px;
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-top: none; /* Versmelt met de zoekbalk erboven */
+    border-top: none;
 }
 
 /* 3. De Zon-Baan (Het Midden / Visuals) */
@@ -190,10 +194,13 @@ button {
     font-size: 1.4rem;
     color: #fff;
 }
-
 #status-text {
-    font-size: 0.7rem;
-    color: rgba(255,255,255,0.3);
+    font-size: 0.75rem;
+    /* Iets lichter wit in plaats van grijs voor de update-tijd */
+    color: rgba(255, 255, 255, 0.6); 
     text-align: center;
-    margin-top: 10px;
+    margin-top: auto;
+    padding-top: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
 }

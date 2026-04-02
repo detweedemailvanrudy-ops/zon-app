@@ -98,6 +98,7 @@ async function getSunData(lat, lon) {
     try {
         const response = await fetch(`${SUN_API_URL}?lat=${lat}&lng=${lon}&formatted=0`);
         const data = await response.json();
+        
         if (data.status === "OK") {
             const res = data.results;
             sunTimes.sunrise = new Date(res.sunrise);
@@ -112,9 +113,15 @@ async function getSunData(lat, lon) {
             const hours = Math.floor(res.day_length / 3600);
             const minutes = Math.floor((res.day_length % 3600) / 60);
             document.getElementById('daylight-duration').innerText = `${hours}u ${minutes}m`;
-            updateStatus("Vice City Vibes Actief 🌴");
+
+            // NIEUW: Update de 'Laatste update' tijd
+            const nu = new Date();
+            const updateTijd = nu.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' });
+            updateStatus(`Laatste update: ${updateTijd}`);
         }
-    } catch (error) { updateStatus("Fout bij laden."); }
+    } catch (error) { 
+        updateStatus("Update mislukt"); 
+    }
 }
 
 // --- 5. DE VICE CITY KLEUR-MACHINE ---
@@ -151,7 +158,7 @@ function getViceColors(p) {
 
 // Helpers
 function saveLocation(n, lt, ln) { localStorage.setItem('lastCity', n); localStorage.setItem('lastLat', lt); localStorage.setItem('lastLon', ln); }
-function updateStatus(m) { document.getElementById('status-text').innerText = m; }
+function updateStatus(msg) {document.getElementById('status-text').innerText = msg;}
 function updateLocationDisplay(t) { document.getElementById('current-location').innerText = t; }
 
 setInterval(() => { if (currentLat && currentLon) getSunData(currentLat, currentLon); }, 1800000);
