@@ -19,25 +19,18 @@ window.addEventListener('DOMContentLoaded', () => {
         updateLocationDisplay(`🏙️ ${savedCity}`);
         getSunData(currentLat, currentLon);
     }
-    
-    // Start de klok direct
     updateClock();
 });
 
-// --- 2. DE KLOK & COUNTDOWN FUNCTIE ---
+// --- 2. DE KLOK & COUNTDOWN ---
 function updateClock() {
     const nu = new Date();
-    
-    // Toon huidige datum en tijd
     const dateOptions = { weekday: 'short', day: 'numeric', month: 'short' };
     document.getElementById('display-date').innerText = nu.toLocaleDateString('nl-NL', dateOptions);
     document.getElementById('current-time-display').innerText = nu.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
-    // Bereken countdown als we zontijden hebben
     if (sunTimes.sunrise && sunTimes.sunset) {
-        let target;
-        let label;
-
+        let target, label;
         if (nu < sunTimes.sunrise) {
             target = sunTimes.sunrise;
             label = "Tot zonsopkomst";
@@ -45,7 +38,6 @@ function updateClock() {
             target = sunTimes.sunset;
             label = "Tot zonsondergang";
         } else {
-            // Na zonsondergang kijken we naar de opkomst van morgen (benadering)
             target = new Date(sunTimes.sunrise.getTime() + 24 * 60 * 60 * 1000);
             label = "Tot volgende opkomst";
         }
@@ -53,15 +45,12 @@ function updateClock() {
         const diff = target - nu;
         const uren = Math.floor(diff / (1000 * 60 * 60));
         const minuten = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        
         document.getElementById('countdown-label').innerText = label;
         document.getElementById('countdown-timer').innerText = `${uren}u ${minuten}m`;
         
-        // Update ook meteen de voortgangsbalk (vloeiender dan elke minuut)
         updateVisuals(sunTimes.sunrise, sunTimes.sunset);
     }
-
-    requestAnimationFrame(updateClock); // Zorgt voor een soepele klok
+    requestAnimationFrame(updateClock);
 }
 
 // --- 3. EVENT LISTENERS ---
@@ -70,7 +59,6 @@ document.getElementById('search-form').addEventListener('submit', async (e) => {
     const cityInput = document.getElementById('city-input');
     const city = cityInput.value;
     if (!city) return;
-
     updateStatus(`Zoeken naar "${city}"...`);
     try {
         const response = await fetch(GEO_API_URL + encodeURIComponent(city));
@@ -104,67 +92,66 @@ document.getElementById('btn-gps').addEventListener('click', () => {
     });
 });
 
-// --- 4. DATA OPHALEN & UI ---
+// --- 4. DATA OPHALEN ---
 async function getSunData(lat, lon) {
     updateStatus("Tijden ophalen...");
     try {
         const response = await fetch(`${SUN_API_URL}?lat=${lat}&lng=${lon}&formatted=0`);
         const data = await response.json();
-        
         if (data.status === "OK") {
-            const results = data.results;
-            sunTimes.sunrise = new Date(results.sunrise);
-            sunTimes.sunset = new Date(results.sunset);
-            const solarNoon = new Date(results.solar_noon);
+            const res = data.results;
+            sunTimes.sunrise = new Date(res.sunrise);
+            sunTimes.sunset = new Date(res.sunset);
+            const solarNoon = new Date(res.solar_noon);
             
-            // 1. Zontijden tonen
-            const options = { hour: '2-digit', minute: '2-digit' };
-            document.getElementById('sunrise-time').innerText = sunTimes.sunrise.toLocaleTimeString('nl-NL', options);
-            document.getElementById('sunset-time').innerText = sunTimes.sunset.toLocaleTimeString('nl-NL', options);
-            document.getElementById('solar-noon').innerText = solarNoon.toLocaleTimeString('nl-NL', options);
+            const opt = { hour: '2-digit', minute: '2-digit' };
+            document.getElementById('sunrise-time').innerText = sunTimes.sunrise.toLocaleTimeString('nl-NL', opt);
+            document.getElementById('sunset-time').innerText = sunTimes.sunset.toLocaleTimeString('nl-NL', opt);
+            document.getElementById('solar-noon').innerText = solarNoon.toLocaleTimeString('nl-NL', opt);
             
-            // 2. Daglichtduur berekenen (day_length is in seconden)
-            const totalSeconds = results.day_length;
-            const hours = Math.floor(totalSeconds / 3600);
-            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const hours = Math.floor(res.day_length / 3600);
+            const minutes = Math.floor((res.day_length % 3600) / 60);
             document.getElementById('daylight-duration').innerText = `${hours}u ${minutes}m`;
-            
-            updateStatus("Gegevens bijgewerkt");
+            updateStatus("Vice City Vibes Actief 🌴");
         }
-    } catch (error) { 
-        updateStatus("Fout bij laden."); 
-        console.error(error);
-    }
+    } catch (error) { updateStatus("Fout bij laden."); }
 }
 
+// --- 5. DE VICE CITY KLEUR-MACHINE ---
 function updateVisuals(start, end) {
     const nu = new Date();
     const totaalDaglicht = end - start;
     const verstreken = nu - start;
     let percentage = (verstreken / totaalDaglicht) * 100;
 
-    percentage = Math.max(0, Math.min(100, percentage));
-    document.getElementById('progress-bar').style.width = percentage + "%";
-    document.getElementById('sun-icon').style.left = percentage + "%";
+    percentage = Math.max(-10, Math.min(110, percentage)); // Iets meer speling voor schemering
+    document.getElementById('progress-bar').style.width = Math.max(0, Math.min(100, percentage)) + "%";
+    document.getElementById('sun-icon').style.left = Math.max(0, Math.min(100, percentage)) + "%";
 
-    if (percentage > 0 && percentage < 100) {
-        const factor = Math.sin((percentage / 100) * Math.PI); 
-        const hue = 30 + (170 * factor);
-        const light = 25 + (25 * factor);
-        document.body.style.background = `linear-gradient(180deg, hsl(${hue}, 70%, ${light}%) 0%, #0f172a 100%)`;
-    } else {
-        document.body.style.background = "linear-gradient(180deg, #020617 0%, #0f172a 100%)";
+    document.body.style.background = getViceColors(percentage);
+}
+
+function getViceColors(p) {
+    // Nacht (voor opkomst of ver na ondergang)
+    if (p <= 0 || p >= 100) {
+        return "linear-gradient(180deg, #020617 0%, #1E1B4B 100%)";
     }
+    // Zonsopkomst (0% - 20% van de dag)
+    if (p < 20) {
+        return "linear-gradient(180deg, #FF8C00 0%, #FDE047 100%)"; 
+    }
+    // Volle Dag (20% - 70%)
+    if (p < 70) {
+        return "linear-gradient(180deg, #00D4FF 0%, #1e293b 100%)";
+    }
+    // GTA 6 Sunset (70% - 100%)
+    // De iconische Magenta naar Purple transition
+    return "linear-gradient(180deg, #FF00FF 0%, #4C1D95 100%)";
 }
 
 // Helpers
-function saveLocation(name, lat, lon) {
-    localStorage.setItem('lastCity', name);
-    localStorage.setItem('lastLat', lat);
-    localStorage.setItem('lastLon', lon);
-}
-function updateStatus(msg) { document.getElementById('status-text').innerText = msg; }
-function updateLocationDisplay(text) { document.getElementById('current-location').innerText = text; }
+function saveLocation(n, lt, ln) { localStorage.setItem('lastCity', n); localStorage.setItem('lastLat', lt); localStorage.setItem('lastLon', ln); }
+function updateStatus(m) { document.getElementById('status-text').innerText = m; }
+function updateLocationDisplay(t) { document.getElementById('current-location').innerText = t; }
 
-// Ververs data elke 30 minuten (omdat zontijden per dag nauwelijks verschuiven)
 setInterval(() => { if (currentLat && currentLon) getSunData(currentLat, currentLon); }, 1800000);
