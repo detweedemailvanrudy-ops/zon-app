@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zon-Tracker</title>
+    <link rel="stylesheet" href="style.css">
+	<link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Zon Tracker</h1>
+            <form class="location-controls" id="search-form">
+				<input type="text" id="city-input" placeholder="Voer stad in..." autocomplete="off">
+				<button type="submit" id="btn-search">Zoek</button>
+				<button type="button" id="btn-gps" title="Gebruik GPS">📍</button>
+			</form>
+        </header>
+		<div class="location-display">
+			<p>Geselecteerde locatie: <span id="current-location">Geen</span></p>
+		</div>
+        <main>
+            <div class="progress-section">
+                <div class="sun-path">
+                    <div id="progress-bar"></div>
+                    <div id="sun-icon">☀️</div>
+                </div>
+                <p id="status-text">Locatie laden...</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span>Opkomst</span>
+                    <strong id="sunrise-time">--:--</strong>
+                </div>
+                <div class="stat-card highlight">
+                    <span>Middelpunt</span>
+                    <strong id="solar-noon">--:--</strong>
+                </div>
+                <div class="stat-card">
+                    <span>Ondergang</span>
+                    <strong id="sunset-time">--:--</strong>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
