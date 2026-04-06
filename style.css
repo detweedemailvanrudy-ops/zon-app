@@ -174,9 +174,19 @@ button {
     padding: 18px 22px;
 }
 
-.highlight {
-    background: rgba(255, 0, 255, 0.1);
-    border: 1px solid var(--vice-pink);
+.countdown-info {
+    width: 100%;
+    text-align: center;
+}
+
+.countdown-info strong {
+    font-size: 1.4rem; /* Iets groter voor de focus */
+    color: var(--accent);
+}
+
+/* Voor het maantje een subtiele gloed toevoegen */
+.moon-mode {
+    text-shadow: 0 0 15px #cbd5e1;
 }
 
 .time-info, .daylight-info {
