@@ -36,12 +36,32 @@ body {
 }
 
 /* 2. Header & Zoeken (Bovenkant) */
+
+
 header h1 {
-    font-size: 2.2rem;
-    font-weight: 800;
-    margin-bottom: 15px;
-    text-shadow: none; /* Schaduw is nu weg */
-    letter-spacing: -1px;
+    font-size: 2.8rem;
+    font-weight: 900;
+    margin-bottom: 5px;
+    letter-spacing: -1.5px;
+    text-align: center;
+
+    /* HET KLEURVERLOOP: We maken hem iets 'strakker' */
+    background: linear-gradient(to right, #FF00FF 0%, #fbbf24 100%);
+    
+    /* FORCEER de achtergrond om precies zo groot als de tekst te zijn */
+    background-size: 100%;
+    background-repeat: no-repeat;
+
+    /* HET KNIP-WERK */
+    -webkit-background-clip: text;
+    background-clip: text;
+    
+    /* Maak de letters transparant */
+    -webkit-text-fill-color: transparent;
+    color: transparent; /* Fallback */
+
+    /* Een subtiele schaduw ACHTER de letters (geeft diepte aan het verloop) */
+    filter: drop-shadow(2px 2px 0px rgba(0, 0, 0, 0.2));
 }
 
 .location-controls {
